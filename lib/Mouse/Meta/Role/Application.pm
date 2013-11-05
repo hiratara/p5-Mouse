@@ -128,8 +128,10 @@ sub apply_methods {
 
         if(!exists $excludes->{$method_name}){
             if(!$consumer->has_method($method_name)){
-                # The third argument $role is used in Role::Composite
-                $consumer->add_method($method_name => $code, $role);
+                if(!exists $role->{conflicting_methods}{$method_name}){
+                    # The third argument $role is used in Role::Composite
+                    $consumer->add_method($method_name => $code, $role);
+                }
             }
         }
 
